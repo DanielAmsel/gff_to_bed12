@@ -69,6 +69,7 @@ foreach ( keys(%annotation) ){
 
         my @block_lengths;              # exon1_stop - exon1_start + 1
         my @block_start_positions;
+	my $block_start = $exons[0];
 	push(@block_start_positions,0);
         for (my $i = 0; $i < scalar(@exons)-2;$i++){
                 my $tmp_block_start     = $exons[$i];
@@ -78,7 +79,7 @@ foreach ( keys(%annotation) ){
                 push(@block_lengths,$tmp_block_len);
 
                 my $tmp_block_start_2   = $exons[$i+1];
-                my $tmp_block_start_positions = $tmp_block_start_2 - $tmp_block_start;
+                my $tmp_block_start_positions = $tmp_block_start_2 - $block_start;
                 push(@block_start_positions,$tmp_block_start_positions);
         }
 	push(@block_lengths,($exons[-1]-$exons[-2]+1));
@@ -86,7 +87,7 @@ foreach ( keys(%annotation) ){
         my $block_sizes         = join(",",@block_lengths);
         my $block_starts        = join(",",@block_start_positions);
 
-	print "$info[0]\t$bed_start\t$exons[-1]\t$info[2]\t0\t$info[1]\t$bed_thick_start\t$cds[-1]\t0\t$block_count\t$block_sizes\t$block_starts\n";
+	print "$info[0]\t$bed_start\t$exons[-1]\t$info[2]\t0\t$info[1]\t$bed_thick_start\t$cds[-1]\t0\t$block_count\t$block_sizes,\t$block_starts,\n";
 
 }
 
